@@ -19,9 +19,9 @@ int main() {
   queue* postfixq = new queue();
   cout << "Welcome to the Shunting Yard!" << endl;
   cout << "Please enter an equation in infix notation" << endl;
-  char* infix = new char [80];
-  cin.getline(infix,80);
-  postfixq = shunt(postfixq, infix);
+  char* inf = new char [80];
+  cin.getline(inf,80);
+  postfixq = shunt(postfixq, inf);
   cout << "done with shunt" << endl;
   node* root = express(postfixq);
   cout << "done with express" << endl;
@@ -34,48 +34,47 @@ int main() {
       running = false;
     }
     else if (strcmp(trans, "infix") == 0) {
-
+      infix(root);
+      cout << endl;
     }
     else if (strcmp(trans, "postfix") == 0) {
-      //postfix(nodehead);
+      postfix(root);
+      cout << endl;
     }
     else if (strcmp(trans, "prefix") == 0) {
-
+      prefix(root);
+      cout << endl;
     }
   }
 }
-void infix(node* nodehead) {
-
-}
-void prefix(node* nodehead) {
-
-}
-void postfix(node* nodehead) {
-  /*node* noden = nodehead; //may have to derefference
-  char* c = new char[80];
-  int moving = true;
-  int charpos = 0;
-  while (moving == true) {
-    node* curr = noden;
-    int counting = 0;
-    while(curr -> getLeft() != NULL) {
-      curr = curr -> getLeft();
-      counting ++;
-    }
-    c[charpos] = curr -> getData()[0];
-    charpos ++;
-    for (int i = counting-1; i > 0; i--) {
-      for (int j = 0; j < i-1; j++) {
-	curr = curr -> getLeft();
-      }
-      c[charpos] = curr -> getRight() -> getData()[0];
-      charpos++;
-      c[charpos] = curr -> getData()[0];
-      charpos ++;
-    }
-    
+void infix(node* parent) {
+  cout << "(";
+  if(parent -> getRight() != NULL) {//if there is right
+    infix(parent -> getRight()); //runs for one to right
   }
-  cout << c;*/
+  cout << parent -> getData();//prints the node data
+  if (parent -> getLeft() != NULL) {//if left exists
+    infix(parent -> getLeft());//runs for one to the left
+  }
+  cout << ")";
+}
+void prefix(node* parent) {
+  cout << parent -> getData();//prints the node data 
+  if(parent -> getRight() != NULL) {//if there is right
+    prefix(parent -> getRight()); //runs for one to right
+  }
+  if (parent -> getLeft() != NULL) {//if left exists
+    prefix(parent -> getLeft());//runs for one to the left
+  }
+}
+void postfix(node* parent) {
+  if(parent -> getRight() != NULL) {//if there is right
+    postfix(parent -> getRight()); //runs for one to right
+  }
+  if (parent -> getLeft() != NULL) {//if left exists
+    postfix(parent -> getLeft());//runs for one to the left
+  }
+  cout << parent -> getData();//prints the node data   
 }
 node* express(queue* postfixq){
   cout << "enterexpress" << endl;
@@ -84,15 +83,15 @@ node* express(queue* postfixq){
   stack* treeconstr = new stack(stackhead);
   node* addstack = postfixq -> dequeue();
   while (addstack != NULL) {
-    cout << "a" << endl;
+    //cout << "a" << endl;
     addstack -> setNext(NULL);
     treeconstr -> push(addstack);
-    cout << "b" << endl;
+    //cout << "b" << endl;
     addstack = postfixq -> dequeue();
-    cout << "c" << endl;
+    //cout << "c" << endl;
   }
   node* root = treeconstr -> pop();
-  cout << "d" << endl;
+  //cout << "d" << endl;
   buildtree(treeconstr, root);
   return root;
 
