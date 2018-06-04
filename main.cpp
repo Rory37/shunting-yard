@@ -167,26 +167,28 @@ queue* shunt(queue* postfixq, char* infix) {
 	node* tocompare = opstack -> pop();//takes off stack to compare for precedence
 	bool prec = true;
 	int count = 0;
-	prec = checkprecedence(data[0], tocompare -> getData()[0]);//runs the checking of precedence
-	if (prec == true) {//if the added is lower precendence
-	  postfixq -> enqueue(tocompare);//adds to queue
-	  count ++;
-	  bool run = true;
-	  //goes through rest of stack to check
-	  while (run == true) {
-	    count ++;
-	    node* putonque = opstack -> pop();
-	    if(putonque == NULL) {//if stack is empty
-	      run = false;
+	if (tocompare != NULL) {
+	    prec = checkprecedence(data[0], tocompare -> getData()[0]);//runs the checking of precedence
+	    if (prec == true) {//if the added is lower precendence
+	      postfixq -> enqueue(tocompare);//adds to queue
+	      count ++;
+	      bool run = true;
+	      //goes through rest of stack to check
+	      while (run == true) {
+	        count ++;
+	        node* putonque = opstack -> pop();
+	        if(putonque == NULL) {//if stack is empty
+	          run = false;
+	        }
+	        else if (checkprecedence(data[0], putonque -> getData()[0]) == false) {//if priority is lower than added
+	          opstack -> push(putonque);//puts the comparison back on stack
+	          run = false;//exits loop
+	        }
+	        else {
+	          postfixq -> enqueue(putonque);//adds on queue
+	        }
+	      }
 	    }
-	    else if (checkprecedence(data[0], putonque -> getData()[0]) == false) {//if priority is lower than added
-	      opstack -> push(putonque);//puts the comparison back on stack
-	      run = false;//exits loop
-	    }
-	    else {
-	      postfixq -> enqueue(putonque);//adds on queue
-	    }
-	  }	
 	}
 	if (count == 0) { //if nothing had to be removed
 	  opstack -> push(tocompare);
