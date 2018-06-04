@@ -1,10 +1,11 @@
 #include "node.h"
 class stack {
  public:
+  //prototypes
   stack(node*);
   ~stack();
   node* pop();
   void push(node*);
  private:
-  node* stackhead;
+  node* stackhead;//holds head of stack
 };

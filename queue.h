@@ -1,6 +1,7 @@
 #include "node.h"
 class queue {
  public:
+  //prototypes
   queue();
   ~queue();
   void enqueue(node*);
@@ -8,6 +9,6 @@ class queue {
   node* getQueueTail();
   node* dequeue();
  private:
-  node* queuehead;
-  node* queuetail;
+  node* queuehead;//holds head
+  node* queuetail;//holds tail
 };

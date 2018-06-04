@@ -3,8 +3,7 @@
 
 using namespace std;
 
-
-stack :: stack(node* newhead) {
+stack :: stack(node* newhead) { //constructor
   stackhead = newhead;
 }
 
@@ -12,17 +11,14 @@ stack :: ~stack(){ //destructor
   delete stackhead;
 }
 
-node* stack :: pop() {
+node* stack :: pop() {//takes and returns last element off of stack
   node* current = stackhead;
   node* toreturn = NULL;
-#ifdef STACK_DEBUG
-  cout << "enter pop" << endl;
-#endif /* STACK_DEBUG */
-  if (current != NULL) {
-    while (current -> getNext() != NULL && current -> getNext() -> getNext() != NULL) {
+  if (current != NULL) {//if stack exitst
+    while (current -> getNext() != NULL && current -> getNext() -> getNext() != NULL) {//checks 2 ahead to set next nul
       current = current -> getNext();
     }
-    if (current -> getNext() != NULL) {
+    if (current -> getNext() != NULL) {//redundant
       toreturn = current -> getNext();
       current -> setNext(NULL);
     }
@@ -31,22 +27,18 @@ node* stack :: pop() {
       stackhead = NULL;
     }
   }
-  return toreturn;
+  return toreturn;//returns removed piece
 }
 
-void stack :: push(node* toadd) {
-#ifdef STACK_DEBUG
-  cout << "enter push" << endl;
-#endif /* STACK_DEBUG */
-  if (stackhead != NULL) {
+void stack :: push(node* toadd) {//adds node to end of stack
+  if (stackhead != NULL) {//if stack has items
     node* current = stackhead;
-    while (current -> getNext() != NULL) {
+    while (current -> getNext() != NULL) {//goes to end of stack
       current = current -> getNext();
-      cout << "e" << endl;
     }
-    current -> setNext(toadd);
+    current -> setNext(toadd);//adds to end
   }
   else {
-    stackhead = toadd;
+    stackhead = toadd;//makes stack with the added
   }
 }

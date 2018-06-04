@@ -2,6 +2,7 @@
 #define guard
 class node {
  public:
+  //prototypes
   node(char*);
   ~node();
   void setLeft(node*);
@@ -12,10 +13,10 @@ class node {
   node* getNext();
   char* getData();
  private:
-  node* left;
-  node* right;
-  char* data;
-  node* next;
+  node* left;//holds left
+  node* right;//holds right
+  char* data;//hols data
+  node* next;//holds next
 };
 
 #endif
